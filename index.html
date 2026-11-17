@@ -1,351 +1,713 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Perayaan Natal - Gereja KIBAID Jemaat Ambon Kota</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Cormorant Garamond, Great Vibes, & Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        serif: ['"Cormorant Garamond"', 'serif'],
-                        script: ['"Great Vibes"', 'cursive'],
-                    },
-                    colors: {
-                        gold: {
-                            light: '#F3E5AB',
-                            DEFAULT: '#B8860B',
-                            dark: '#8B6508',
-                            muted: '#D4AF37'
-                        },
-                        cream: {
-                            light: '#FFFDF9',
-                            DEFAULT: '#FAF5EB',
-                            warm: '#F2E8D5'
-                        },
-                        kibaid: {
-                            brown: '#6E473B',
-                            green: '#2E7D32',
-                            red: '#C62828'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Perayaan Natal - Gereja KIBAID Jemaat Ambon Kota</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-outer: #f5f2eb;
+      --card-bg: #fffdf9;
+      --gold-primary: #b88936;
+      --gold-dark: #8c621d;
+      --gold-light: #e6cf9b;
+      --accent-rust: #b8441e;
+      --text-main: #2d261e;
+      --text-muted: #6e6356;
+    }
 
-    <style>
-        /* Kustomisasi Animasi & Gaya Halus */
-        body {
-            background-color: #F4EFE6;
-            background-image: radial-gradient(#D4AF37 0.5px, transparent 0.5px), radial-gradient(#D4AF37 0.5px, #F4EFE6 0.5px);
-            background-size: 28px 28px;
-            background-position: 0 0, 14px 14px;
-            overflow-x: hidden;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        /* Animasi nyala api lilin */
-        @keyframes flicker {
-            0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
-            25% { transform: scale(1.05, 0.95) rotate(1.5deg); opacity: 1; }
-            50% { transform: scale(0.96, 1.04) rotate(-0.5deg); opacity: 0.9; }
-            75% { transform: scale(1.03, 0.98) rotate(1deg); opacity: 0.98; }
-        }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0%, var(--bg-outer) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      overflow-x: hidden;
+    }
 
-        .candle-flame {
-            transform-origin: bottom center;
-            animation: flicker 2.8s infinite ease-in-out;
-        }
+    /* Partikel Cahaya Latar */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
 
-        /* Animasi ornamen gantung berayun lembut */
-        @keyframes sway {
-            0%, 100% { transform: rotate(-2.5deg); }
-            50% { transform: rotate(2.5deg); }
-        }
+    .spark {
+      position: absolute;
+      background: radial-gradient(circle, rgba(235, 194, 108, 0.9) 0%, rgba(235, 194, 108, 0) 70%);
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
 
-        .ornament-sway {
-            transform-origin: top center;
-            animation: sway 4.5s infinite ease-in-out;
-        }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.6); opacity: 0; }
+      20% { opacity: 0.85; }
+      80% { opacity: 0.85; }
+      100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+    }
 
-        .ornament-sway-delay {
-            transform-origin: top center;
-            animation: sway 5.2s infinite ease-in-out 1.2s;
-        }
+    /* Kontainer Kartu */
+    .card-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 430px;
+      background: linear-gradient(180deg, #ffffff 0%, #fcf8f0 55%, #f3ead8 100%);
+      border-radius: 28px;
+      border: 1.5px solid rgba(184, 137, 54, 0.35);
+      box-shadow: 0 20px 50px rgba(84, 62, 26, 0.14), inset 0 0 30px rgba(255, 250, 238, 0.9);
+      overflow: hidden;
+      transition: all 0.5s ease;
+    }
 
-        /* Animasi bintang berkelip */
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.85); }
-            50% { opacity: 1; transform: scale(1.15); }
-        }
+    /* Ornamen Garis Dalam */
+    .inner-border {
+      margin: 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(184, 137, 54, 0.25);
+      padding: 28px 22px 32px;
+      position: relative;
+      text-align: center;
+    }
 
-        .star-twinkle {
-            animation: twinkle 3s infinite ease-in-out;
-        }
+    /* Ornamen Pojok */
+    .corner-glow {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 260px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(235, 198, 122, 0.32) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
+    }
 
-        /* Animasi gelombang suara musik */
-        @keyframes soundWave {
-            0%, 100% { height: 6px; }
-            50% { height: 16px; }
-        }
-        .music-bar {
-            animation: soundWave 0.9s infinite ease-in-out;
-        }
+    /* Logo */
+    .logo-box {
+      margin: 0 auto 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        /* Transisi layar sampul */
-        #cover-screen {
-            transition: transform 0.95s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.85s ease;
-        }
-        #cover-screen.opened {
-            transform: translateY(-105%);
-            opacity: 0;
-            pointer-events: none;
-        }
+    .logo-box img {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+      animation: gentlePulse 4s ease-in-out infinite;
+    }
 
-        /* Animasi Fade-In saat di-scroll */
-        .reveal-item {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .reveal-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
 
-        /* Scrollbar elegan */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FAF5EB;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D4AF37;
-            border-radius: 10px;
-        }
-    </style>
+    /* Tipografi */
+    .subtitle-top {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 8px;
+    }
+
+    .church-title {
+      font-family: 'Cinzel', serif;
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-main);
+      margin-bottom: 18px;
+    }
+
+    .theme-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .theme-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: 38px;
+      line-height: 1.15;
+      color: var(--gold-dark);
+      text-shadow: 0 2px 12px rgba(212, 169, 85, 0.25);
+      margin-bottom: 4px;
+    }
+
+    .verse {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    /* Layar Sampul (Cover) */
+    #cover-screen {
+      display: block;
+      animation: fadeIn 0.7s ease;
+    }
+
+    .guest-box {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(184, 137, 54, 0.28);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+    }
+
+    .guest-box p {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .guest-box span {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .btn-open {
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #c84b22 0%, #9e3311 100%);
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(184, 68, 30, 0.32);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-open:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(184, 68, 30, 0.4);
+    }
+
+    .btn-open:active {
+      transform: scale(0.98);
+    }
+
+    .cover-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* Layar Isi Undangan */
+    #main-content {
+      display: none;
+      animation: revealContent 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes revealContent {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .greeting {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-main);
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 1px;
+      width: 65%;
+      margin: 18px auto;
+      background: linear-gradient(90deg, transparent, rgba(184, 137, 54, 0.5), transparent);
+    }
+
+    /* Detail Waktu & Tempat */
+    .event-details {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(184, 137, 54, 0.25);
+      border-radius: 16px;
+      padding: 16px 14px;
+      margin-bottom: 16px;
+    }
+
+    .detail-item {
+      margin-bottom: 10px;
+    }
+
+    .detail-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold-dark);
+    }
+
+    .detail-value {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .dresscode-badge {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--gold-primary);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      box-shadow: 0 2px 8px rgba(184, 137, 54, 0.12);
+    }
+
+    /* Hitung Mundur */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 16px 0 20px;
+    }
+
+    .cd-box {
+      background: #ffffff;
+      border: 1px solid rgba(184, 137, 54, 0.28);
+      border-radius: 12px;
+      padding: 8px 4px;
+    }
+
+    .cd-num {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      display: block;
+    }
+
+    .cd-text {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Tombol Aksi */
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 20px;
+    }
+
+    .btn-action {
+      width: 100%;
+      padding: 11px 16px;
+      border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #c5963e 0%, #9b7022 100%);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 6px 16px rgba(155, 112, 34, 0.25);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: var(--gold-dark);
+      border: 1px solid rgba(184, 137, 54, 0.45);
+    }
+
+    .btn-action:hover {
+      transform: translateY(-1px);
+    }
+
+    .closing-text {
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .blessing {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin-top: 8px;
+    }
+
+    /* Lilin Animasi di Bagian Bawah */
+    .candles-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 18px;
+      margin-top: 18px;
+      opacity: 0.9;
+    }
+
+    .candle {
+      position: relative;
+      width: 14px;
+      height: 36px;
+      background: linear-gradient(180deg, #fffdf8 0%, #e8dcc5 100%);
+      border-radius: 4px 4px 2px 2px;
+      box-shadow: 0 0 18px rgba(255, 198, 92, 0.55);
+    }
+
+    .candle.small {
+      height: 26px;
+      width: 12px;
+    }
+
+    .flame {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 13px;
+      background: radial-gradient(ellipse at bottom, #ffffff 10%, #ffd56b 55%, #ff8c1a 100%);
+      border-radius: 50% 50% 35% 35%;
+      box-shadow: 0 0 14px 4px rgba(255, 196, 77, 0.7);
+      animation: flicker 1.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(0.95) rotate(-2deg); opacity: 0.9; }
+      100% { transform: translateX(-50%) scale(1.06) rotate(2deg); opacity: 1; }
+    }
+
+    /* Tombol Musik Melayang */
+    #music-toggle {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 50;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1.5px solid var(--gold-primary);
+      color: var(--gold-dark);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+      cursor: pointer;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+    }
+
+    .spinning {
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
-<body class="text-stone-800 antialiased selection:bg-amber-200 selection:text-stone-900">
+<body>
 
-    <!-- Notifikasi Toast Pengganti alert() -->
-    <div id="toast-notification" class="fixed top-5 left-1/2 -translate-x-1/2 z-[100] pointer-events-none opacity-0 transition-all duration-300 transform -translate-y-4">
-        <div class="bg-stone-900/95 text-cream-light px-5 py-3 rounded-full shadow-xl border border-gold-muted/40 flex items-center gap-2.5 text-xs sm:text-sm font-medium backdrop-blur-md">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-            <span id="toast-message">Pesan notifikasi</span>
+  <div id="particles"></div>
+
+  <div class="card-wrapper">
+    <div class="inner-border">
+      <div class="corner-glow"></div>
+
+      <!-- LAYAR SAMPUL (COVER) -->
+      <div id="cover-screen">
+        <div class="logo-box">
+          <img src="logo-gereja-kibaid.png" alt="Logo Gereja KIBAID">
         </div>
+
+        <div class="subtitle-top">Undangan Perayaan Natal</div>
+        <h1 class="church-title">GEREJA KIBAID<br>JEMAAT AMBON KOTA</h1>
+
+        <div class="theme-label">Tema Natal</div>
+        <div class="theme-script">Terang di Tengah Kegelapan</div>
+        <div class="verse">(Yohanes 1:5)</div>
+
+        <div class="guest-box">
+          <p>Kepada Yth. Bapak/Ibu/Saudara(i)</p>
+          <span>Di Tempat</span>
+        </div>
+
+        <button type="button" class="btn-open" onclick="bukaUndangan()">
+          <span>✉️</span> Buka Undangan
+        </button>
+        <div class="cover-hint">Ketuk tombol di atas untuk membuka undangan & musik</div>
+      </div>
+
+      <!-- LAYAR ISI UNDANGAN -->
+      <div id="main-content">
+        <div class="logo-box">
+          <img src="logo-gereja-kibaid.png" alt="Logo Gereja KIBAID">
+        </div>
+
+        <p class="greeting">
+          <strong>Syalom,</strong><br>
+          Mari bersama-sama merayakan sukacita dan damai Natal dalam ibadah perayaan:
+        </p>
+
+        <h2 class="church-title" style="margin-bottom: 12px;">PERAYAAN NATAL<br>GEREJA KIBAID<br>JEMAAT AMBON KOTA</h2>
+
+        <div class="theme-label">Tema</div>
+        <div class="theme-script">Terang di Tengah Kegelapan</div>
+        <div class="verse" style="margin-bottom: 14px;">Yohanes 1:5</div>
+
+        <div class="event-details">
+          <div class="detail-item">
+            <div class="detail-label">Hari & Tanggal</div>
+            <div class="detail-value">Sabtu, 12 Desember 2026</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Waktu</div>
+            <div class="detail-value">Pukul 19.00 WIT</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Tempat</div>
+            <div class="detail-value">Gedung Gereja KIBAID<br>Jemaat Ambon Kota</div>
+          </div>
+          <div class="detail-item" style="margin-top: 8px;">
+            <span class="dresscode-badge">Dress Code: Putih</span>
+          </div>
+        </div>
+
+        <!-- Hitung Mundur -->
+        <div class="countdown-grid">
+          <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-text">Hari</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-text">Jam</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-text">Menit</span></div>
+          <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-text">Detik</span></div>
+        </div>
+
+        <!-- Tombol Interaktif -->
+        <div class="action-buttons">
+          <a href="https://maps.google.com/?q=Gereja+KIBAID+Ambon" target="_blank" rel="noopener" class="btn-action btn-gold">
+            📍 Buka Lokasi di Google Maps
+          </a>
+          <button type="button" class="btn-action btn-outline" onclick="simpanKalender()">
+            📅 Simpan ke Kalender
+          </button>
+          <button type="button" class="btn-action btn-outline" onclick="bagikanWA()">
+            📲 Bagikan Undangan via WhatsApp
+          </button>
+        </div>
+
+        <p class="closing-text">
+          Kehadiran Bapak/Ibu/Saudara(i) merupakan suatu sukacita bagi kami.
+        </p>
+        <div class="blessing">Tuhan Yesus Memberkati</div>
+
+        <div class="candles-bar">
+          <div class="candle small"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle small"><div class="flame"></div></div>
+        </div>
+      </div>
+
     </div>
+  </div>
 
-    <!-- Tombol Kontrol Musik Mengambang (Pojok Kanan Bawah) -->
-    <button id="music-toggle-btn" onclick="toggleMusic()" aria-label="Putar atau Hentikan Musik Natal" 
-        class="fixed bottom-5 right-5 z-50 hidden items-center gap-2 bg-white/95 backdrop-blur-md text-stone-800 border border-amber-300/80 shadow-lg hover:shadow-xl px-3.5 py-2.5 rounded-full transition-all duration-300 active:scale-95">
-        <div id="music-bars" class="flex items-end gap-0.5 h-4 w-4 justify-center">
-            <span class="w-0.5 bg-amber-600 rounded-full h-2 transition-all"></span>
-            <span class="w-0.5 bg-amber-600 rounded-full h-3.5 transition-all"></span>
-            <span class="w-0.5 bg-amber-600 rounded-full h-1.5 transition-all"></span>
-        </div>
-        <span id="music-label" class="text-xs font-semibold text-amber-900">Musik: Mati</span>
-    </button>
+  <button type="button" id="music-toggle" onclick="toggleMusik()" title="Putar / Jeda Musik">🎵</button>
 
-    <!-- Input Tersembunyi untuk Unggah File Logo Lokal Opsional -->
-    <input type="file" id="logo-file-input" accept="image/png, image/jpeg, image/webp, image/svg+xml" class="hidden" onchange="handleLogoUpload(event)">
+  <script>
+    // 1. Partikel Cahaya Emas
+    (function buatPartikel() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 24; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+        const size = Math.random() * 6 + 3;
+        spark.style.width = size + 'px';
+        spark.style.height = size + 'px';
+        spark.style.left = Math.random() * 100 + '%';
+        spark.style.animationDuration = (Math.random() * 8 + 7) + 's';
+        spark.style.animationDelay = (Math.random() * 6) + 's';
+        container.appendChild(spark);
+      }
+    })();
 
-    <!-- ===================================================================== -->
-    <!-- LAYAR SAMPUL (COVER SCREEN) SEBELUM UNDANGAN DIBUKA                   -->
-    <!-- ===================================================================== -->
-    <section id="cover-screen" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-gradient-to-b from-cream-light via-cream to-cream-warm">
-        <!-- Kanvas Partikel Cahaya pada Cover -->
-        <canvas id="cover-particles" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+    // 2. Musik Natal Lembut (Web Audio API - Malam Kudus)
+    let audioCtx = null;
+    let isPlaying = false;
+    let melodyTimer = null;
 
-        <!-- Kartu Sampul -->
-        <div class="relative w-full max-w-md bg-white/95 backdrop-blur-sm rounded-[2rem] border border-amber-200/80 shadow-[0_20px_60px_-15px_rgba(184,134,11,0.22)] p-7 sm:p-9 text-center overflow-hidden">
-            <!-- Dekorasi Cahaya Atas -->
-            <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-200/30 rounded-full blur-3xl pointer-events-none"></div>
+    const notes = [
+      { f: 392.00, d: 0.9 }, { f: 440.00, d: 0.3 }, { f: 392.00, d: 0.6 }, { f: 329.63, d: 1.5 },
+      { f: 392.00, d: 0.9 }, { f: 440.00, d: 0.3 }, { f: 392.00, d: 0.6 }, { f: 329.63, d: 1.5 },
+      { f: 587.33, d: 1.2 }, { f: 587.33, d: 0.6 }, { f: 493.88, d: 1.5 },
+      { f: 523.25, d: 1.2 }, { f: 523.25, d: 0.6 }, { f: 392.00, d: 1.5 }
+    ];
+    let noteIndex = 0;
 
-            <!-- Logo Resmi Gereja KIBAID (Cover - Siap GitHub Pages: logo-kibaid.png) -->
-            <div class="relative mx-auto w-28 h-28 mb-4 flex items-center justify-center">
-                <div id="cover-logo-wrapper" class="w-full h-full flex items-center justify-center">
-                    <img src="logo-kibaid.png" alt="Logo Gereja KIBAID" 
-                         onerror="handleLogoError(this)"
-                         class="w-full h-full object-contain drop-shadow-sm">
-                </div>
-            </div>
+    function playNextNote() {
+      if (!isPlaying || !audioCtx) return;
+      const n = notes[noteIndex];
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(n.f, audioCtx.currentTime);
 
-            <p class="text-xs uppercase tracking-[0.22em] text-amber-800/80 font-semibold mb-2">Undangan Perayaan Natal</p>
-            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-snug tracking-tight mb-3">
-                GEREJA KIBAID<br>
-                <span class="text-amber-800">JEMAAT AMBON KOTA</span>
-            </h1>
+      gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + n.d);
 
-            <div class="w-16 h-[1.5px] bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto my-4"></div>
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + n.d);
 
-            <p class="text-xs text-stone-500 uppercase tracking-widest mb-1">Tema Natal</p>
-            <p class="font-script text-3xl sm:text-4xl text-amber-700 leading-tight mb-1">“Terang di Tengah Kegelapan”</p>
-            <p class="font-serif italic text-sm text-stone-600 mb-6">(Yohanes 1:5)</p>
+      noteIndex = (noteIndex + 1) % notes.length;
+      melodyTimer = setTimeout(playNextNote, n.d * 950);
+    }
 
-            <div class="bg-cream/80 border border-amber-200/70 rounded-2xl p-3.5 mb-6 text-xs sm:text-sm text-stone-700">
-                <p class="font-medium">Kepada Yth. Bapak/Ibu/Saudara(i)</p>
-                <p class="text-stone-500 text-xs mt-0.5">Di Tempat</p>
-            </div>
+    function mulaiMusik() {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        if (!isPlaying) {
+          isPlaying = true;
+          const btn = document.getElementById('music-toggle');
+          btn.style.display = 'flex';
+          btn.classList.add('spinning');
+          playNextNote();
+        }
+      } catch (e) {
+        console.log('Audio tidak didukung:', e);
+      }
+    }
 
-            <!-- Tombol Buka Undangan -->
-            <button onclick="openInvitation()" 
-                class="group relative w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 text-white font-semibold text-sm shadow-[0_10px_25px_-5px_rgba(180,83,9,0.45)] hover:shadow-[0_14px_30px_-5px_rgba(180,83,9,0.6)] transition-all duration-300 active:scale-[0.98]">
-                <svg class="w-4 h-4 text-amber-200 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
-                </svg>
-                <span>Buka Undangan</span>
-            </button>
-            <p class="text-[11px] text-stone-400 mt-3">Ketuk tombol di atas untuk membuka undangan & musik</p>
-        </div>
-    </section>
+    function toggleMusik() {
+      const btn = document.getElementById('music-toggle');
+      if (isPlaying) {
+        isPlaying = false;
+        clearTimeout(melodyTimer);
+        btn.classList.remove('spinning');
+        btn.textContent = '🔇';
+      } else {
+        isPlaying = true;
+        btn.classList.add('spinning');
+        btn.textContent = '🎵';
+        playNextNote();
+      }
+    }
 
-    <!-- ===================================================================== -->
-    <!-- KONTEN UTAMA UNDANGAN DIGITAL (MOBILE-FIRST ROUNDED CARD)             -->
-    <!-- ===================================================================== -->
-    <main id="main-invitation" class="min-h-screen py-5 px-3 sm:py-10 sm:px-4 flex justify-center items-start">
-        
-        <!-- Kartu Utama dengan Sudut Melengkung & Bayangan Halus -->
-        <article class="relative w-full max-w-[460px] bg-gradient-to-b from-[#FFFFFF] via-[#FFFDF8] to-[#F7EFE0] rounded-[2.25rem] border border-amber-200/80 shadow-[0_25px_70px_-15px_rgba(120,85,40,0.18)] overflow-hidden">
-            
-            <!-- Kanvas Animasi Partikel Cahaya Emas Halus -->
-            <canvas id="card-particles" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+    // 3. Buka Undangan
+    function bukaUndangan() {
+      document.getElementById('cover-screen').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      mulaiMusik();
+    }
 
-            <!-- Dekorasi Cahaya Pijar Hangat di Latar -->
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-80 bg-amber-100/50 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute top-[42%] left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-300/20 rounded-full blur-3xl pointer-events-none"></div>
+    // 4. Hitung Mundur ke 12 Desember 2026, 19:00 WIT (UTC+9)
+    const targetDate = new Date('2026-12-12T19:00:00+09:00').getTime();
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-mins').textContent = '00';
+        document.getElementById('cd-secs').textContent = '00';
+        return;
+      }
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-            <!-- Ornamen Sudut Atas (Ranting Pinus & Bola Natal Emas) -->
-            <div class="relative z-20 flex justify-between items-start pointer-events-none select-none">
-                <!-- Ornamen Kiri Atas -->
-                <svg class="w-36 h-36 -ml-3 -mt-2" viewBox="0 0 160 160">
-                    <!-- Ranting Pinus -->
-                    <path d="M-5,15 Q45,25 85,5" stroke="#1E4620" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                    <path d="M-5,25 Q35,45 65,40" stroke="#2E6F32" stroke-width="3" fill="none" stroke-linecap="round"/>
-                    <path d="M15,18 L25,5 M28,20 L38,6 M42,20 L52,5 M55,18 L66,3 M20,22 L28,36 M35,23 L42,37 M50,21 L58,34" stroke="#2D5A27" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M10,30 L18,45 M25,35 L32,50 M40,38 L46,52" stroke="#3B7A33" stroke-width="1.8" stroke-linecap="round"/>
-                    <!-- Tali & Bola Natal Emas 1 -->
-                    <g class="ornament-sway">
-                        <line x1="34" y1="26" x2="34" y2="88" stroke="#B8860B" stroke-width="1.2"/>
-                        <rect x="30" y="86" width="8" height="4" rx="1" fill="#D4AF37"/>
-                        <circle cx="34" cy="105" r="16" fill="url(#goldBallGrad)"/>
-                        <circle cx="29" cy="100" r="4" fill="#FFFBEB" opacity="0.65"/>
-                    </g>
-                    <!-- Tali & Bintang Emas -->
-                    <g class="ornament-sway-delay">
-                        <line x1="68" y1="14" x2="68" y2="56" stroke="#B8860B" stroke-width="1.2"/>
-                        <polygon points="68,54 71.5,62 80,63 73.5,68.5 75.5,77 68,72.5 60.5,77 62.5,68.5 56,63 64.5,62" fill="url(#goldBallGrad)"/>
-                    </g>
-                    <defs>
-                        <radialGradient id="goldBallGrad" cx="35%" cy="35%" r="70%">
-                            <stop offset="0%" stop-color="#FEF08A"/>
-                            <stop offset="55%" stop-color="#D4AF37"/>
-                            <stop offset="100%" stop-color="#854D0E"/>
-                        </radialGradient>
-                    </defs>
-                </svg>
+      document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-                <!-- Ornamen Kanan Atas -->
-                <svg class="w-36 h-36 -mr-3 -mt-2" viewBox="0 0 160 160">
-                    <!-- Ranting Pinus -->
-                    <path d="M165,15 Q115,25 75,5" stroke="#1E4620" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                    <path d="M165,25 Q125,45 95,40" stroke="#2E6F32" stroke-width="3" fill="none" stroke-linecap="round"/>
-                    <path d="M145,18 L135,5 M132,20 L122,6 M118,20 L108,5 M105,18 L94,3 M140,22 L132,36 M125,23 L118,37 M110,21 L102,34" stroke="#2D5A27" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M150,30 L142,45 M135,35 L128,50 M120,38 L114,52" stroke="#3B7A33" stroke-width="1.8" stroke-linecap="round"/>
-                    <!-- Tali & Bola Natal Putih-Emas -->
-                    <g class="ornament-sway-delay">
-                        <line x1="126" y1="26" x2="126" y2="88" stroke="#B8860B" stroke-width="1.2"/>
-                        <rect x="122" y="86" width="8" height="4" rx="1" fill="#D4AF37"/>
-                        <circle cx="126" cy="105" r="16" fill="url(#pearlBallGrad)" stroke="#E5C158" stroke-width="1"/>
-                        <path d="M111,105 Q126,112 141,105" fill="none" stroke="#D4AF37" stroke-width="1.2"/>
-                        <circle cx="121" cy="100" r="4" fill="#FFFFFF" opacity="0.9"/>
-                    </g>
-                    <!-- Tali & Bintang Emas -->
-                    <g class="ornament-sway">
-                        <line x1="92" y1="14" x2="92" y2="56" stroke="#B8860B" stroke-width="1.2"/>
-                        <polygon points="92,54 95.5,62 104,63 97.5,68.5 99.5,77 92,72.5 84.5,77 86.5,68.5 80,63 88.5,62" fill="url(#goldBallGrad)"/>
-                    </g>
-                    <defs>
-                        <radialGradient id="pearlBallGrad" cx="35%" cy="35%" r="70%">
-                            <stop offset="0%" stop-color="#FFFFFF"/>
-                            <stop offset="65%" stop-color="#F5EFE6"/>
-                            <stop offset="100%" stop-color="#D6C7B2"/>
-                        </radialGradient>
-                    </defs>
-                </svg>
-            </div>
+    // 5. Simpan ke Kalender (.ics)
+    function simpanKalender() {
+      const icsContent = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'BEGIN:VEVENT',
+        'DTSTART:20261212T100000Z',
+        'DTEND:20261212T130000Z',
+        'SUMMARY:Perayaan Natal Gereja KIBAID Jemaat Ambon Kota',
+        'DESCRIPTION:Tema: Terang di Tengah Kegelapan (Yohanes 1:5). Dress Code: Putih.',
+        'LOCATION:Gedung Gereja KIBAID Jemaat Ambon Kota',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
 
-            <!-- Bagian Konten Utama -->
-            <div class="relative z-20 px-6 sm:px-8 -mt-12 pb-6 text-center">
-                
-                <!-- Logo Resmi Gereja KIBAID (Kartu Utama - Siap GitHub Pages: logo-kibaid.png) -->
-                <div class="reveal-item relative group mx-auto w-32 h-32 mb-4 flex items-center justify-center bg-white/95 rounded-full p-2.5 shadow-sm border border-amber-200/70">
-                    <div id="main-logo-wrapper" class="w-full h-full flex items-center justify-center overflow-hidden rounded-full">
-                        <img src="logo-kibaid.png" alt="Logo Gereja KIBAID" 
-                             onerror="handleLogoError(this)"
-                             class="w-full h-full object-contain">
-                    </div>
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Natal-Gereja-KIBAID-Ambon-Kota.ics';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
 
-                    <!-- Tombol Mini Opsional untuk Pratinjau File Logo Lokal (PNG/JPG) -->
-                    <button type="button" onclick="triggerLogoUpload()" title="Pilih file logo-kibaid.png dari perangkat untuk pratinjau"
-                        class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-white border border-amber-300 text-amber-800 shadow-sm hover:bg-amber-50 flex items-center justify-center opacity-80 hover:opacity-100 transition-all active:scale-90">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Sapaan Pembuka -->
-                <div class="reveal-item mb-5">
-                    <p class="text-sm sm:text-[15px] text-stone-700 leading-relaxed font-medium">
-                        Syalom,<br>
-                        mari bersama-sama merayakan<br>
-                        sukacita dan damai Natal
-                    </p>
-                </div>
-
-                <!-- Judul Acara Utama -->
-                <div class="reveal-item mb-6">
-                    <h1 class="font-serif text-[26px] sm:text-[30px] font-bold text-stone-900 leading-tight tracking-wide">
-                        PERAYAAN NATAL<br>
-                        GEREJA KIBAID<br>
-                        <span class="text-amber-900">JEMAAT AMBON KOTA</span>
-                    </h1>
-                </div>
-
-                <!-- Pembatas Ornamen Bintang -->
-                <div class="reveal-item flex items-center justify-center gap-3 my-5">
-                    <span class="h-[1px] w-14 bg-gradient-to-r from-transparent to-amber-500/70"></span>
-                    <svg class="w-4 h-4 text-amber-600 star-twinkle" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
-                    </svg>
-                    <span class="h-[1px] w-14 bg-gradient-to-l from-transparent to-amber-500/70"></span>
-                </div>
-
-                <!-- Bagian Tema Natal -->
-                <div class="reveal-item relative py-4 px-3 my-4 rounded-3xl bg-gradient-to-b from-amber-50/70 via-white/90 to-amber-50/70 border border-amber-200/70 shadow-sm">
-                    <p class="text-xs font-bold tracking-[0.2em] text-stone-600 uppercase mb-1.5">TEMA:</p>
-                    <h2 class="font-script text-[38px] sm:text-[42px] text-amber-800 leading-[1.15] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
-                        Terang di Tengah<br>Kegelapan
-                    </h2>
-                    <p class="font-serif font-semibold text-base sm:text-lg text-stone-800 mt-1.5 tracking-wide">
-                        Yohanes 1:5
-                    </p>
-                    <p class="text-xs italic text-stone-500 mt-2 px-3 leading-relaxed">
-                        “Terang itu bercahaya di dalam kegelapan dan kegelapan itu tidak menguasainya.”
-                    </p>
-                </div>
-
-                <!-- Detail Waktu & Tempat -->
-                <div class="reveal-item my-6 space-y-2 text-stone-900">
-                    <div class="inline-flex items-c
+    // 6. Bagikan ke WhatsApp
+    function bagikanWA() {
+      const linkWeb = window.location.href;
+      const pesan = `Syalom,\nKami mengundang Bapak/Ibu/Saudara(i) untuk hadir dalam *Perayaan Natal Gereja KIBAID Jemaat Ambon Kota*.\n\nTema: _"Terang di Tengah Kegelapan" (Yohanes 1:5)_\nHari/Tgl: Sabtu, 12 Desember 2026\nPukul: 19.00 WIT\nTempat: Gedung Gereja KIBAID Jemaat Ambon Kota\nDress Code: Putih\n\nBuka undangan digital lengkap di sini:\n${linkWeb}`;
+      window.open('https://wa.me/?text=' + encodeURIComponent(pesan), '_blank');
+    }
+  </script>
+</body>
+</html>
