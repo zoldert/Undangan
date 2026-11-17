@@ -505,6 +505,9 @@
 </head>
 <body>
 
+  <!-- Pemutar File MP3 dari GitHub -->
+  <audio id="bg-music" src="musik-natal.mp3" loop preload="auto"></audio>
+
   <div id="particles"></div>
 
   <div class="card-wrapper">
@@ -641,90 +644,31 @@
       }
     })();
 
-    // 2. Musik Natal Lembut (Web Audio API - Malam Kudus)
-    let audioCtx = null;
-    let isPlaying = false;
-    let melodyTimer = null;
-
-    const notes = [
-      { f: 392.00, b: 196.00, d: 0.9 }, { f: 440.00, b: 0, d: 0.3 }, { f: 392.00, b: 0, d: 0.6 }, { f: 329.63, b: 196.00, d: 1.5 },
-      { f: 392.00, b: 196.00, d: 0.9 }, { f: 440.00, b: 0, d: 0.3 }, { f: 392.00, b: 0, d: 0.6 }, { f: 329.63, b: 196.00, d: 1.5 },
-      { f: 587.33, b: 293.66, d: 1.2 }, { f: 587.33, b: 0, d: 0.6 }, { f: 493.88, b: 246.94, d: 1.5 },
-      { f: 523.25, b: 261.63, d: 1.2 }, { f: 523.25, b: 0, d: 0.6 }, { f: 392.00, b: 196.00, d: 1.5 },
-      { f: 440.00, b: 220.00, d: 1.2 }, { f: 440.00, b: 0, d: 0.6 }, { f: 523.25, b: 220.00, d: 0.9 }, { f: 493.88, b: 0, d: 0.3 }, { f: 440.00, b: 0, d: 0.6 },
-      { f: 392.00, b: 196.00, d: 0.9 }, { f: 440.00, b: 0, d: 0.3 }, { f: 392.00, b: 0, d: 0.6 }, { f: 329.63, b: 196.00, d: 1.5 }
-    ];
-    let noteIndex = 0;
-
-    function playTone(freq, duration, volume) {
-      if (!audioCtx || freq <= 0) return;
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now);
-
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.linearRampToValueAtTime(volume, now + 0.06);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration + 0.25);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + duration + 0.3);
-    }
-
-    function playNextNote() {
-      if (!isPlaying || !audioCtx) return;
-      const n = notes[noteIndex];
-      playTone(n.f, n.d, 0.14);
-      if (n.b > 0) {
-        playTone(n.b, n.d * 1.4, 0.07);
-      }
-      noteIndex = (noteIndex + 1) % notes.length;
-      melodyTimer = setTimeout(playNextNote, n.d * 920);
-    }
+    // 2. Kontrol Musik MP3
+    const bgMusic = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
 
     function mulaiMusik() {
-      try {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!audioCtx) {
-          audioCtx = new AudioContextClass();
-        }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-        // Pancing bunyi awal langsung saat interaksi klik pengguna
-        playTone(392.00, 0.15, 0.01);
-
-        if (!isPlaying) {
-          isPlaying = true;
-          const btn = document.getElementById('music-toggle');
-          btn.style.display = 'flex';
-          btn.classList.add('spinning');
-          btn.textContent = '🎵';
-          playNextNote();
-        }
-      } catch (e) {
-        console.log('Audio error:', e);
-      }
+      musicBtn.style.display = 'flex';
+      bgMusic.play().then(() => {
+        musicBtn.classList.add('spinning');
+        musicBtn.textContent = '🎵';
+      }).catch((err) => {
+        console.log('Autoplay tertahan browser, ketuk tombol musik manual:', err);
+        musicBtn.classList.remove('spinning');
+        musicBtn.textContent = '🔇';
+      });
     }
 
     function toggleMusik() {
-      const btn = document.getElementById('music-toggle');
-      if (isPlaying) {
-        isPlaying = false;
-        clearTimeout(melodyTimer);
-        btn.classList.remove('spinning');
-        btn.textContent = '🔇';
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicBtn.classList.add('spinning');
+        musicBtn.textContent = '🎵';
       } else {
-        if (audioCtx && audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-        isPlaying = true;
-        btn.classList.add('spinning');
-        btn.textContent = '🎵';
-        playNextNote();
+        bgMusic.pause();
+        musicBtn.classList.remove('spinning');
+        musicBtn.textContent = '🔇';
       }
     }
 
@@ -803,7 +747,7 @@
       }
 
       // Ganti nomor di bawah ini dengan nomor WhatsApp panitia (awali dengan 62 tanpa tanda +)
-      const nomorPanitia = "6281248547548";
+      const nomorPanitia = "";
 
       const teksKonfirmasi = `Syalom Panitia Natal Gereja KIBAID Jemaat Ambon Kota,\n\nKonfirmasi Kesediaan Hadir:\nNama: *${nama}*\nKeterangan: *${status}*\nJumlah Hadir: *${jumlah} orang*\n\nTerima kasih, Tuhan Yesus Memberkati.`;
 
