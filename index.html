@@ -746,17 +746,24 @@
         return;
       }
 
-      // Ganti nomor di bawah ini dengan nomor WhatsApp panitia (awali dengan 62 tanpa tanda +)
-      const nomorPanitia = "";
-
-      const teksKonfirmasi = `Syalom Panitia Natal Gereja KIBAID Jemaat Ambon Kota,\n\nKonfirmasi Kesediaan Hadir:\nNama: *${nama}*\nKeterangan: *${status}*\nJumlah Hadir: *${jumlah} orang*\n\nTerima kasih, Tuhan Yesus Memberkati.`;
+      const scriptURL = "https://script.google.com/macros/s/AKfycbysnp7GbDWsm_tnTNOFfNwS54pv74z7pWSKBrBRS304YO23kj-LEWcICMRXkVNh8cA/exec";
 
       msgBox.style.display = 'block';
-      msgBox.textContent = `Terima kasih, ${nama}. Konfirmasi "${status}" (${jumlah} orang) telah dicatat.`;
+      msgBox.textContent = 'Sedang mengirim konfirmasi kehadiran...';
 
-      if (nomorPanitia) {
-        window.open(`https://wa.me/${nomorPanitia}?text=${encodeURIComponent(teksKonfirmasi)}`, '_blank');
-      }
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nama: nama, status: status, jumlah: jumlah })
+      })
+      .then(() => {
+        msgBox.textContent = `Terima kasih, ${nama}. Konfirmasi "${status}" (${jumlah} orang) telah tersimpan!`;
+        document.getElementById('rsvp-nama').value = '';
+      })
+      .catch(() => {
+        msgBox.textContent = 'Terjadi gangguan jaringan. Silakan coba kirim ulang.';
+      });
     }
   </script>
 </body>
