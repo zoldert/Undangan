@@ -705,28 +705,10 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // 5. Simpan ke Kalender (.ics)
+    // 5. Simpan Langsung ke Google Calendar
     function simpanKalender() {
-      const icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'BEGIN:VEVENT',
-        'DTSTART:20261212T100000Z',
-        'DTEND:20261212T130000Z',
-        'SUMMARY:Perayaan Natal Gereja KIBAID Jemaat Ambon Kota',
-        'DESCRIPTION:Tema: Terang di Tengah Kegelapan (Yohanes 1:5). Dress Code: Putih.',
-        'LOCATION:Gedung Gereja KIBAID Jemaat Ambon Kota',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-
-      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Natal-Gereja-KIBAID-Ambon-Kota.ics';
-      a.click();
-      URL.revokeObjectURL(url);
+      const urlGCal = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Perayaan+Natal+Gereja+KIBAID+Jemaat+Ambon+Kota&dates=20261212T100000Z/20261212T130000Z&details=Tema:+Terang+di+Tengah+Kegelapan+(Yohanes+1:5).+Dress+Code:+Putih.&location=Gedung+Gereja+KIBAID+Jemaat+Ambon+Kota";
+      window.open(urlGCal, '_blank');
     }
 
     // 6. Kesediaan untuk Hadir (RSVP)
