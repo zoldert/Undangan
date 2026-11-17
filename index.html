@@ -351,12 +351,6 @@
       box-shadow: 0 6px 16px rgba(155, 112, 34, 0.25);
     }
 
-    .btn-outline {
-      background: #ffffff;
-      color: var(--gold-dark);
-      border: 1px solid rgba(184, 137, 54, 0.45);
-    }
-
     .btn-rsvp-trigger {
       background: linear-gradient(135deg, #2d7a47 0%, #1e5932 100%);
       color: #ffffff;
@@ -586,9 +580,6 @@
           <a href="https://maps.app.goo.gl/em8oBEZg6XqUvNvBA" target="_blank" rel="noopener" class="btn-action btn-gold">
             📍 Buka Lokasi di Google Maps
           </a>
-          <button type="button" class="btn-action btn-outline" onclick="simpanKalender()">
-            📅 Simpan ke Kalender
-          </button>
           <button type="button" class="btn-action btn-rsvp-trigger" onclick="toggleRSVP()">
             ✍️ Kesediaan untuk Hadir (RSVP)
           </button>
@@ -705,13 +696,7 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // 5. Simpan Langsung ke Google Calendar
-    function simpanKalender() {
-      const urlGCal = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Perayaan+Natal+Gereja+KIBAID+Jemaat+Ambon+Kota&dates=20261212T100000Z/20261212T130000Z&details=Tema:+Terang+di+Tengah+Kegelapan+(Yohanes+1:5).+Dress+Code:+Putih.&location=Gedung+Gereja+KIBAID+Jemaat+Ambon+Kota";
-      window.open(urlGCal, '_blank');
-    }
-
-    // 6. Kesediaan untuk Hadir (RSVP)
+    // 5. Kesediaan untuk Hadir (RSVP)
     function toggleRSVP() {
       const box = document.getElementById('rsvp-box');
       box.style.display = (box.style.display === 'block') ? 'none' : 'block';
