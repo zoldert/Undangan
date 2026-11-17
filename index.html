@@ -84,7 +84,6 @@
       text-align: center;
     }
 
-    /* Ornamen Pojok */
     .corner-glow {
       position: absolute;
       top: -40px;
@@ -246,13 +245,6 @@
       margin-bottom: 18px;
     }
 
-    .divider {
-      height: 1px;
-      width: 65%;
-      margin: 18px auto;
-      background: linear-gradient(90deg, transparent, rgba(184, 137, 54, 0.5), transparent);
-    }
-
     /* Detail Waktu & Tempat */
     .event-details {
       background: rgba(255, 255, 255, 0.85);
@@ -333,7 +325,7 @@
       display: flex;
       flex-direction: column;
       gap: 9px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .btn-action {
@@ -365,8 +357,65 @@
       border: 1px solid rgba(184, 137, 54, 0.45);
     }
 
+    .btn-rsvp-trigger {
+      background: linear-gradient(135deg, #2d7a47 0%, #1e5932 100%);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 6px 16px rgba(30, 89, 50, 0.22);
+    }
+
     .btn-action:hover {
       transform: translateY(-1px);
+    }
+
+    /* Kotak Formulir Kesediaan Hadir (RSVP) */
+    #rsvp-box {
+      display: none;
+      background: #ffffff;
+      border: 1px solid rgba(184, 137, 54, 0.35);
+      border-radius: 16px;
+      padding: 16px 14px;
+      margin-bottom: 18px;
+      text-align: left;
+      animation: fadeIn 0.35s ease;
+    }
+
+    #rsvp-box h4 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .rsvp-input, .rsvp-select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(184, 137, 54, 0.4);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-main);
+      background: #fffdf9;
+      margin-bottom: 10px;
+    }
+
+    .rsvp-input:focus, .rsvp-select:focus {
+      outline: none;
+      border-color: var(--gold-dark);
+    }
+
+    #rsvp-status-msg {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #eef8f1;
+      border: 1px solid #b8dfc4;
+      color: #1e5932;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-align: center;
     }
 
     .closing-text {
@@ -431,18 +480,18 @@
       bottom: 18px;
       right: 18px;
       z-index: 50;
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       background: #ffffff;
       border: 1.5px solid var(--gold-primary);
       color: var(--gold-dark);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
       cursor: pointer;
       display: none;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
+      font-size: 20px;
     }
 
     .spinning {
@@ -537,9 +586,25 @@
           <button type="button" class="btn-action btn-outline" onclick="simpanKalender()">
             📅 Simpan ke Kalender
           </button>
-          <button type="button" class="btn-action btn-outline" onclick="bagikanWA()">
-            📲 Bagikan Undangan via WhatsApp
+          <button type="button" class="btn-action btn-rsvp-trigger" onclick="toggleRSVP()">
+            ✍️ Kesediaan untuk Hadir (RSVP)
           </button>
+        </div>
+
+        <!-- Form Konfirmasi Kehadiran -->
+        <div id="rsvp-box">
+          <h4>Konfirmasi Kesediaan Hadir</h4>
+          <input type="text" id="rsvp-nama" class="rsvp-input" placeholder="Tulis Nama Bapak/Ibu/Saudara(i)...">
+          <select id="rsvp-status" class="rsvp-select">
+            <option value="Ya, Saya Bersedia Hadir">Ya, Saya Bersedia Hadir</option>
+            <option value="Hadir Bersama Keluarga">Hadir Bersama Keluarga</option>
+            <option value="Maaf, Berhalangan Hadir">Maaf, Berhalangan Hadir</option>
+          </select>
+          <input type="number" id="rsvp-jumlah" class="rsvp-input" min="1" max="15" value="1" placeholder="Jumlah yang hadir (orang)">
+          <button type="button" class="btn-action btn-rsvp-trigger" onclick="kirimRSVP()">
+            Kirim Konfirmasi Kehadiran
+          </button>
+          <div id="rsvp-status-msg"></div>
         </div>
 
         <p class="closing-text">
@@ -582,51 +647,66 @@
     let melodyTimer = null;
 
     const notes = [
-      { f: 392.00, d: 0.9 }, { f: 440.00, d: 0.3 }, { f: 392.00, d: 0.6 }, { f: 329.63, d: 1.5 },
-      { f: 392.00, d: 0.9 }, { f: 440.00, d: 0.3 }, { f: 392.00, d: 0.6 }, { f: 329.63, d: 1.5 },
-      { f: 587.33, d: 1.2 }, { f: 587.33, d: 0.6 }, { f: 493.88, d: 1.5 },
-      { f: 523.25, d: 1.2 }, { f: 523.25, d: 0.6 }, { f: 392.00, d: 1.5 }
+      { f: 392.00, b: 196.00, d: 0.9 }, { f: 440.00, b: 0, d: 0.3 }, { f: 392.00, b: 0, d: 0.6 }, { f: 329.63, b: 196.00, d: 1.5 },
+      { f: 392.00, b: 196.00, d: 0.9 }, { f: 440.00, b: 0, d: 0.3 }, { f: 392.00, b: 0, d: 0.6 }, { f: 329.63, b: 196.00, d: 1.5 },
+      { f: 587.33, b: 293.66, d: 1.2 }, { f: 587.33, b: 0, d: 0.6 }, { f: 493.88, b: 246.94, d: 1.5 },
+      { f: 523.25, b: 261.63, d: 1.2 }, { f: 523.25, b: 0, d: 0.6 }, { f: 392.00, b: 196.00, d: 1.5 },
+      { f: 440.00, b: 220.00, d: 1.2 }, { f: 440.00, b: 0, d: 0.6 }, { f: 523.25, b: 220.00, d: 0.9 }, { f: 493.88, b: 0, d: 0.3 }, { f: 440.00, b: 0, d: 0.6 },
+      { f: 392.00, b: 196.00, d: 0.9 }, { f: 440.00, b: 0, d: 0.3 }, { f: 392.00, b: 0, d: 0.6 }, { f: 329.63, b: 196.00, d: 1.5 }
     ];
     let noteIndex = 0;
+
+    function playTone(freq, duration, volume) {
+      if (!audioCtx || freq <= 0) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.linearRampToValueAtTime(volume, now + 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration + 0.25);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + duration + 0.3);
+    }
 
     function playNextNote() {
       if (!isPlaying || !audioCtx) return;
       const n = notes[noteIndex];
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(n.f, audioCtx.currentTime);
-
-      gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + n.d);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + n.d);
-
+      playTone(n.f, n.d, 0.14);
+      if (n.b > 0) {
+        playTone(n.b, n.d * 1.4, 0.07);
+      }
       noteIndex = (noteIndex + 1) % notes.length;
-      melodyTimer = setTimeout(playNextNote, n.d * 950);
+      melodyTimer = setTimeout(playNextNote, n.d * 920);
     }
 
     function mulaiMusik() {
       try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          audioCtx = new AudioContextClass();
         }
         if (audioCtx.state === 'suspended') {
           audioCtx.resume();
         }
+        // Pancing bunyi awal langsung saat interaksi klik pengguna
+        playTone(392.00, 0.15, 0.01);
+
         if (!isPlaying) {
           isPlaying = true;
           const btn = document.getElementById('music-toggle');
           btn.style.display = 'flex';
           btn.classList.add('spinning');
+          btn.textContent = '🎵';
           playNextNote();
         }
       } catch (e) {
-        console.log('Audio tidak didukung:', e);
+        console.log('Audio error:', e);
       }
     }
 
@@ -638,6 +718,9 @@
         btn.classList.remove('spinning');
         btn.textContent = '🔇';
       } else {
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
         isPlaying = true;
         btn.classList.add('spinning');
         btn.textContent = '🎵';
@@ -647,10 +730,10 @@
 
     // 3. Buka Undangan
     function bukaUndangan() {
+      mulaiMusik();
       document.getElementById('cover-screen').style.display = 'none';
       document.getElementById('main-content').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      mulaiMusik();
     }
 
     // 4. Hitung Mundur ke 12 Desember 2026, 19:00 WIT (UTC+9)
@@ -702,11 +785,34 @@
       URL.revokeObjectURL(url);
     }
 
-    // 6. Bagikan ke WhatsApp
-    function bagikanWA() {
-      const linkWeb = window.location.href;
-      const pesan = `Syalom,\nKami mengundang Bapak/Ibu/Saudara(i) untuk hadir dalam *Perayaan Natal Gereja KIBAID Jemaat Ambon Kota*.\n\nTema: _"Terang di Tengah Kegelapan" (Yohanes 1:5)_\nHari/Tgl: Sabtu, 12 Desember 2026\nPukul: 19.00 WIT\nTempat: Gedung Gereja KIBAID Jemaat Ambon Kota\nDress Code: Putih\n\nBuka undangan digital lengkap di sini:\n${linkWeb}`;
-      window.open('https://wa.me/?text=' + encodeURIComponent(pesan), '_blank');
+    // 6. Kesediaan untuk Hadir (RSVP)
+    function toggleRSVP() {
+      const box = document.getElementById('rsvp-box');
+      box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function kirimRSVP() {
+      const nama = document.getElementById('rsvp-nama').value.trim();
+      const status = document.getElementById('rsvp-status').value;
+      const jumlah = document.getElementById('rsvp-jumlah').value || 1;
+      const msgBox = document.getElementById('rsvp-status-msg');
+
+      if (!nama) {
+        alert('Silakan isi nama Bapak/Ibu/Saudara(i) terlebih dahulu.');
+        return;
+      }
+
+      // Ganti nomor di bawah ini dengan nomor WhatsApp panitia (awali dengan 62 tanpa tanda +)
+      const nomorPanitia = "";
+
+      const teksKonfirmasi = `Syalom Panitia Natal Gereja KIBAID Jemaat Ambon Kota,\n\nKonfirmasi Kesediaan Hadir:\nNama: *${nama}*\nKeterangan: *${status}*\nJumlah Hadir: *${jumlah} orang*\n\nTerima kasih, Tuhan Yesus Memberkati.`;
+
+      msgBox.style.display = 'block';
+      msgBox.textContent = `Terima kasih, ${nama}. Konfirmasi "${status}" (${jumlah} orang) telah dicatat.`;
+
+      if (nomorPanitia) {
+        window.open(`https://wa.me/${nomorPanitia}?text=${encodeURIComponent(teksKonfirmasi)}`, '_blank');
+      }
     }
   </script>
 </body>
