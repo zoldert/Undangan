@@ -89,7 +89,6 @@
       animation: fadeIn 0.7s ease;
     }
 
-    /* Bagian Teks Atas (Di Atas Segel Lilin Emas) */
     .cover-top {
       position: relative;
       z-index: 2;
@@ -115,13 +114,11 @@
       text-shadow: 0 1px 6px rgba(255, 255, 255, 0.95);
     }
 
-    /* Ruang Tengah Kosong agar Segel Lilin Emas Terlihat Penuh */
     .seal-spacer {
       height: 220px;
       pointer-events: none;
     }
 
-    /* Bagian Bawah (Di Bawah Segel Lilin Emas) */
     .cover-bottom {
       position: relative;
       z-index: 2;
@@ -196,7 +193,7 @@
     }
 
     /* =========================================
-       LAYAR ISI UNDANGAN (POSTER + INTERAKTIF)
+       LAYAR ISI UNDANGAN (POSTER + PENGUNDANG + INTERAKTIF)
        ========================================= */
     #main-content {
       display: none;
@@ -225,11 +222,93 @@
       display: block;
     }
 
-    /* Panel Interaktif di Bawah Poster */
+    /* Bagian Yang Mengundang & Mengetahui */
+    .inviters-section {
+      padding: 20px 18px 18px;
+      background: linear-gradient(180deg, #f5efe6 0%, #ede4d5 100%);
+      border-top: 1px solid rgba(184, 137, 54, 0.25);
+      text-align: center;
+    }
+
+    .inviters-card {
+      background: rgba(255, 253, 249, 0.86);
+      border: 1px solid rgba(184, 137, 54, 0.32);
+      border-radius: 16px;
+      padding: 16px 14px;
+      box-shadow: 0 4px 14px rgba(84, 62, 26, 0.05);
+    }
+
+    .inviters-heading {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 3px;
+    }
+
+    .inviters-org {
+      font-family: 'Cinzel', serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .inviters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed rgba(184, 137, 54, 0.35);
+    }
+
+    .person-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .person-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .person-role {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .approver-box {
+      padding-top: 2px;
+    }
+
+    .approver-heading {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 2px;
+    }
+
+    .approver-org {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    /* Panel Interaktif di Bawah */
     .interactive-panel {
-      padding: 20px 20px 26px;
+      padding: 18px 20px 26px;
       background: linear-gradient(180deg, #ede5d8 0%, #f9f5ee 100%);
-      border-top: 1px solid rgba(184, 137, 54, 0.28);
+      border-top: 1px solid rgba(184, 137, 54, 0.25);
       text-align: center;
     }
 
@@ -409,7 +488,6 @@
         <h1 class="church-title">GEREJA KIBAID<br>JEMAAT AMBON KOTA</h1>
       </div>
 
-      <!-- Area Tengah agar Segel Lilin Emas KIBAID Terlihat Jelas -->
       <div class="seal-spacer"></div>
 
       <div class="cover-bottom">
@@ -426,16 +504,43 @@
       </div>
     </div>
 
-    <!-- LAYAR ISI UNDANGAN (POSTER GAMBAR + TOMBOL INTERAKTIF) -->
+    <!-- LAYAR ISI UNDANGAN -->
     <div id="main-content">
+      <!-- Gambar Poster Utama -->
       <div class="poster-container">
         <img src="kartu-undangan.jpg" alt="Undangan Perayaan Natal Gereja KIBAID Jemaat Ambon Kota">
       </div>
 
+      <!-- Susunan Yang Mengundang & Mengetahui -->
+      <div class="inviters-section">
+        <div class="inviters-card">
+          <div class="inviters-heading">Yang Mengundang</div>
+          <div class="inviters-org">Panitia PHBG Tahun 2026</div>
+
+          <div class="inviters-grid">
+            <div class="person-box">
+              <span class="person-name">Pnt. Agus Rurianto Palallung</span>
+              <span class="person-role">Ketua</span>
+            </div>
+            <div class="person-box">
+              <span class="person-name">Aurelia Rerung</span>
+              <span class="person-role">Sekretaris</span>
+            </div>
+          </div>
+
+          <div class="approver-box">
+            <div class="approver-heading">Diketahui Oleh</div>
+            <div class="approver-org">Badan Pengurus Majelis Jemaat</div>
+            <span class="person-name">Pdt. Yohanis Pabontong, M.Th</span>
+            <span class="person-role" style="display: block;">Ketua</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel Hitung Mundur, Maps, & RSVP -->
       <div class="interactive-panel">
         <div class="panel-label">Menuju Perayaan Natal</div>
 
-        <!-- Hitung Mundur -->
         <div class="countdown-grid">
           <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-text">Hari</span></div>
           <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-text">Jam</span></div>
@@ -443,7 +548,6 @@
           <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-text">Detik</span></div>
         </div>
 
-        <!-- Tombol Lokasi & RSVP -->
         <div class="action-buttons">
           <a href="https://maps.app.goo.gl/em8oBEZg6XqUvNvBA" target="_blank" rel="noopener" class="btn-action btn-gold">
             📍 Buka Lokasi di Google Maps
